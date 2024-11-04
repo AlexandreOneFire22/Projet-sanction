@@ -1,0 +1,16 @@
+{
+    "name": "gauthiera/projet-sanction",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Gauthiera\\ProjetSanction\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "GAUTHIER Alexandre",
+            "email": "alexgau70@gmail.com"
+        }
+    ],
+    "require": {}
+}
