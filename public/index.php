@@ -19,7 +19,7 @@ $entityManager = require_once __DIR__.'/../config/bootstrap.php';
 $route = $_GET['route'] ?? 'accueil' ;
 
 
-require __DIR__."/../views/header.php";
+require __DIR__ . "/../views/header.php";
 
 
 switch ($route){
@@ -71,7 +71,7 @@ switch ($route){
 }
 
 
-require __DIR__."/../views/footer.php";
+require __DIR__ . "/../views/footer.php";
 
 
 
