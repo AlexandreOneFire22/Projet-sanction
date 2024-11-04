@@ -16,7 +16,6 @@ $entityManager = require_once __DIR__.'/../config/bootstrap.php';
 
 
 
-
 $route = $_GET['route'] ?? 'accueil' ;
 
 
