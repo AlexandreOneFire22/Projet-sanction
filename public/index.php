@@ -25,16 +25,19 @@ require __DIR__ . "/../views/_partial/header.php";
 switch ($route){
 
     case "accueil" :
+            $_GET['footer'] = "footerMoins";
         $accueilController = new \App\Controllers\AccueilController();
         $accueilController->Accueil();
 
         break;
 
-    case "livre-list" :
+    case "mentionsLegales" :
 
-        $livreControleur = new \App\Controllers\LivreController($entityManager);
+        $_GET['footer'] = "footerPlus";
 
-        $livreControleur->list();
+        $livreControleur = new \App\Controllers\MentionsLegales();
+
+        $livreControleur->MentionsLegales();
 
         break;
 
@@ -54,16 +57,9 @@ switch ($route){
 
         break;
 
-    case "livre-add" :
-
-        $livreControleur = new \App\Controllers\LivreController($entityManager);
-
-        $livreControleur->addLivre();
-
-        break;
-
     default :
         // Page erreur 404
+        $_GET['footer'] = "footerMoins";
         echo "Page non trouvée";
 
         break;

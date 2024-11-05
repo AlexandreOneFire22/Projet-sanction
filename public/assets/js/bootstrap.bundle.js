@@ -6312,3 +6312,16 @@
 
 }));
 //# sourceMappingURL=bootstrap.bundle.js.map
+
+$(window).on('resize',function(){
+  var windowHeigth = $(window).height();
+  var windowWidth = $(window).width();
+  $.ajax({
+    method:'POST',
+    url:'taille.php',
+    data:{heigth: windowHeigth, width:windowWidth},
+  }).done(function(msg){
+    alert(msg)
+  });
+
+});
