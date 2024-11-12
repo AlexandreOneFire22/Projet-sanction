@@ -1,5 +1,7 @@
 <body>
 
+<main class="container-fluid">
+
 <h1>Mentions Légales :</h1>
 
 <ol style="list-style: upper-roman">
@@ -58,5 +60,7 @@
         <p>Pour toute question, réclamation, ou suggestion concernant le site, vous pouvez
             contacter [Adresse e-mail ou formulaire de contact].</p>
 </ol>
+
+</main>
 
 </body>

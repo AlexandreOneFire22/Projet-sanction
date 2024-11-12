@@ -3,10 +3,8 @@
 // Contrôleur FRONTAL => Router
 // Toute les requêtes des utilisateurs passent par ce fichier
 
-//use App\Entity\Livre; #####################################################################################################
 
-//require_once __DIR__.'/../vendor/autoload.php';
-
+require_once __DIR__.'/../vendor/autoload.php';
 
 /**
  * @var Doctrine\ORM\EntityManager $entityManager
@@ -25,7 +23,7 @@ require __DIR__ . "/../views/_partial/header.php";
 switch ($route){
 
     case "accueil" :
-            $_GET['footer'] = "footerMoins";
+        $_GET['footer'] = "footerMoins";
         $accueilController = new \App\Controllers\AccueilController();
         $accueilController->Accueil();
 
@@ -35,25 +33,19 @@ switch ($route){
 
         $_GET['footer'] = "footerPlus";
 
-        $livreControleur = new \App\Controllers\MentionsLegales();
+        $mentionsLegalesControleur = new \App\Controllers\MentionsLegales();
 
-        $livreControleur->MentionsLegales();
+        $mentionsLegalesControleur->MentionsLegales();
 
         break;
 
-    case "livre-details" :
+    case "user-add" :
 
-        $id = $_GET['id'] ?? null ;
+        $_GET['footer'] = "footerMoins";
 
-        if ($id){
+        $userControleur = new \App\Controllers\UserController($entityManager);
 
-            $livreControleur = new \App\Controllers\LivreController($entityManager);
-
-            $livreControleur->details($id);
-
-        }else{
-            echo "La requête n'est pas valide.";
-        }
+        $userControleur->addUser();
 
         break;
 
