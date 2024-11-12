@@ -29,6 +29,8 @@ class UserController
             $password = $_POST["password"];
             $passwordVerif = $_POST["passwordVerif"];
 
+            $erreurs = [];
+
             if (empty($prenom)) {
                 $erreurs ["prenom"] = "La saisie du prénom est obligatoire.";
             }
@@ -42,18 +44,55 @@ class UserController
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $erreurs ["email"] = "L'adresse email n'est pas valide.";
 
-
             }elseif (!empty($this->repository->findOneBy(['email' => $email]))){
-                $erreurs ["email_utilisateur"] = "Cette adresse email est déjà utilisé.";
+                $erreurs ["email"] = "Cette adresse email est déjà utilisé.";
             }
 
-            if (empty($password)) {
-                $erreurs ["password"] = "Le mot de passe est obligatoire.";
+            $passwordParLettre = str_split($password);
+
+            if (empty($password)){
+                $erreurs ["password"] [] = "Le mot de passe est obligatoire.";
             }elseif (strlen($password)<8){
-            $erreurs ["password"] = "Le mot de passe doit comporter plus de 8 caractère.";
+                $erreurs ["password"] [] = "Le mot de passe doit comporter plus de 8 caractère.";
             }
 
-            //#############################################################################################
+                $tabPassword = str_split($password);
+
+                $minusculePresent = false;
+                $majusculePresent = false;
+                $chiffrePresent = false;
+
+                foreach ($tabPassword as $lettre) {
+
+                    $assciiLetttre = ord($lettre);
+
+                    switch (true) {
+                        case ($assciiLetttre >= 48 && $assciiLetttre <= 57):
+                            $chiffrePresent = true;
+                            break;
+
+                        case ($assciiLetttre >= 65 && $assciiLetttre <= 90):
+                            $majusculePresent = true;
+                            break;
+
+                        case ($assciiLetttre >= 97 && $assciiLetttre <= 122):
+                            $minusculePresent = true;
+                            break;
+                    }
+                }
+
+                if (!$minusculePresent) {
+                    $erreurs ["password"] [] = "Le mot de passe doit comporter au moins une minuscule.";
+                }
+
+                if (!$majusculePresent) {
+                    $erreurs ["password"] [] = "Le mot de passe doit comporter au moins une majuscule.";
+                }
+
+                if (!$chiffrePresent) {
+                    $erreurs ["password"] [] = "Le mot de passe doit comporter au moins un chiffre.";
+                }
+
 
             if (empty($passwordVerif)) {
                 $erreurs ["passwordVerif"] = "Le mot de passe doit être à nouveau saisie.";
@@ -61,25 +100,27 @@ class UserController
                 $erreurs ["passwordVerif"] = "Le mot de passe saisie est différent, il doit être identique.";
             }
 
-            //ajout des données dans la base de données :
-            $user = new User();
-            $user->setNom($_POST["nom"]);
-            $user->setPrenom($_POST["prenom"]);
-            $user->setEmail($_POST["email"]);
+            if (empty($erreurs)) {
+                //ajout des données dans la base de données :
+                $user = new User();
+                $user->setNom($_POST["nom"]);
+                $user->setPrenom($_POST["prenom"]);
+                $user->setEmail($_POST["email"]);
 
-            $passwordHash = password_hash($_POST["password"],PASSWORD_DEFAULT);
+                $passwordHash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-            $user->setPassword($passwordHash);
+                $user->setPassword($passwordHash);
 
+                $this->entityManager->persist($user); //persist n'exécute pas directement le insert
 
+                //Valider le Insert
 
-            $this->entityManager->persist($user); //persist n'exécute pas directement le insert
+                $this->entityManager->flush(); // flush Réalise le Insert
 
-            //Valider le Insert
-
-            $this->entityManager->flush(); // flush Réalise le Insert
-
-            require __DIR__."/../../views/accueil/accueil.php";
+                require __DIR__."/../../public/index.php";
+            }else{
+                require __DIR__."/../../views/user/addUser.php";
+            }
         }else{
             require __DIR__."/../../views/user/addUser.php";
         }

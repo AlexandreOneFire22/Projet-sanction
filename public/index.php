@@ -41,7 +41,7 @@ switch ($route){
 
     case "user-add" :
 
-        $_GET['footer'] = "footerMoins";
+        $_GET['footer'] = "footerPlus";
 
         $userControleur = new \App\Controllers\UserController($entityManager);
 
