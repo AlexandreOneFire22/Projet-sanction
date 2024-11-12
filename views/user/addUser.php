@@ -49,6 +49,16 @@
                        placeholder="Saisissez votre mot de passe">
             </div>
 
+            <div class="mb-3">
+                <label for="passwordVerif" class="form-label fs-5">Confirmer le mot de passe* :</label>
+                <input type="password"
+                       class="form-control"
+                       id="passwordVerif"
+                       name="passwordVerif"
+                       value=""
+                       placeholder="Saisissez à nouveau votre mot de passe">
+            </div>
+
             <p class="fst-italic mt-3">*Champs obligatoire</p>
 
             <span class="d-flex justify-content-evenly">
