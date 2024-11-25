@@ -2,7 +2,7 @@
 
 return [
     '/' => ['AccueilController', 'Accueil'],
-    '/accueil' => ['AccueilController', 'Accueil'],
-    '/mentionsLegales' => ['MentionsLegalesControleur', 'MentionsLegales'],
-    '/user-add' => ['UserControleur', 'addUser']
+    '/index' => ['AccueilController', 'Accueil'],
+    '/mentionsLegales' => ['MentionsLegalesController', 'MentionsLegales'],
+    '/user-add' => ['UserController', 'addUser']
 ];

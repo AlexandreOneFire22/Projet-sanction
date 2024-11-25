@@ -13,7 +13,7 @@
     <nav class="navbar navbar-expand-md bg-info border-bottom border-3 border-primary mb-5">
         <div class="container-fluid mx-2">
             <div class="d-flex justify-content-start">
-                <a class="navbar-brand d-flex" href="index.php">
+                <a class="navbar-brand d-flex" href="/index">
                     <img src="assets/image/logo.png" width="140">
                     <h1 class="fw-bold text-primary fst-italic align-self-center ms-2" id="nomLogo">my punishment~</h1>
                 </a>
@@ -39,7 +39,7 @@
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link fs-3 fw-bold" href="index.php?route=user-add">|créer un compte| </a>
+                            <a class="nav-link fs-3 fw-bold" href="/user-add">|créer un compte| </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fs-3 fw-bold" href="">|se connecter|</a>
@@ -60,7 +60,7 @@
 <script src="assets/js/bootstrap.bundle.js"></script>
 
 <footer class="fixed-bottom bg-info border-top border-3 border-primary d-flex justify-content-evenly" id="<?=$_GET['footer']?>">
-    <a href="index.php?route=mentionsLegales" class="align-self-center fs-2">Mentions légales</a>
+    <a href="/mentionsLegales" class="align-self-center fs-2">Mentions légales</a>
     <a href="" class="align-self-center fs-2">Contact</a>
     <div class="d-flex justify-content-evenly">
         <a href="" class="align-self-center mx-2"> <img src="assets/image/instagramLogo.png" width="50"></a>

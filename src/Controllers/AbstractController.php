@@ -11,8 +11,9 @@ abstract class AbstractController
         ob_start();
         require __DIR__ . '/../../views/' . $template . '.php';
         $content = ob_get_clean();
-        
-        require __DIR__ . '/../../views/base.php?footer='.$footer;
+
+        $_GET['footer'] = "$footer";
+        require __DIR__ . '/../../views/base.php';
     }
 
     protected function redirect(string $url): void
@@ -26,7 +27,7 @@ abstract class AbstractController
         http_response_code($code);
         
         if ($code === 404) {
-            $this->render('error/404');
+            $this->render('error/404',"footerMoins");
             exit;
         }
     }

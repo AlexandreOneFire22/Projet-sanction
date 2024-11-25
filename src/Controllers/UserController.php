@@ -117,12 +117,12 @@ class UserController extends AbstractController
 
                 $this->entityManager->flush(); // flush Réalise le Insert
 
-                require __DIR__."/../../public/index.php";
+                $this->render('accueil/accueil',"footerMoins");
             }else{
-                require __DIR__."/../../views/user/addUser.php";
+                $this->render('user/addUser',"footerPlus");
             }
         }else{
-            require __DIR__."/../../views/user/addUser.php";
+            $this->render('user/addUser',"footerMoins");
         }
 
     }
