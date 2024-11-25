@@ -1,4 +1,3 @@
-<?php $erreurs = $GLOBALS["erreurs"] ?>
 
 <main class="container-fluid mb-4">
 
