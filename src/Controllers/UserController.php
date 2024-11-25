@@ -11,9 +11,13 @@ class UserController extends AbstractController
 {
     private EntityManager $entityManager;
 
+    /**
+     * @var Doctrine\ORM\EntityManager $entityManager
+     */
+
     public function __construct()
     {
-        $this->entityManager = $entityManager;
+        $this->entityManager = require_once __DIR__.'/../../config/bootstrap.php';
         $this->repository = $this->entityManager->getRepository(User::class);
     }
 
