@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 
 require_once __DIR__.'/../../vendor/autoload.php';
 
-class UserController
+class UserController extends AbstractController
 {
     private EntityManager $entityManager;
 

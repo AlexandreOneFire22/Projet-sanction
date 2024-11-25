@@ -2,13 +2,13 @@
 
 namespace App\Controllers;
 
-class MentionsLegales
+class MentionsLegales extends AbstractController
 {
 
-    public function MentionsLegales()
+    public function MentionsLegales() : void
     {
 
-        require_once __DIR__ . "/../../views/mentionsLegales/mentionsLegales.php";
+        $this->render('MentionsLegales/MentionsLegales');
 
     }
 }

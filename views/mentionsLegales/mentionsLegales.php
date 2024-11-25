@@ -1,4 +1,3 @@
-<body>
 
 <main class="container-fluid">
 
@@ -62,5 +61,3 @@
 </ol>
 
 </main>
-
-</body>
