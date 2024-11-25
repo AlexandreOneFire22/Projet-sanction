@@ -34,6 +34,7 @@ class UserController extends AbstractController
             $passwordVerif = $_POST["passwordVerif"];
 
             $erreurs = [];
+            global $erreurs;
 
             if (empty($prenom)) {
                 $erreurs ["prenom"] = "La saisie du prénom est obligatoire.";
@@ -123,10 +124,11 @@ class UserController extends AbstractController
 
                 $this->render('accueil/accueil',"footerMoins");
             }else{
-                $this->render('user/addUser',"footerPlus");
+                $GLOBALS['erreurs'] = $erreurs;
+                $this->render('user/addUser',"footerPlus",$erreurs);
             }
         }else{
-            $this->render('user/addUser',"footerMoins");
+            $this->render('user/addUser',"footerPlus");
         }
 
     }
