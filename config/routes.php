@@ -1,8 +1,8 @@
 <?php
 
 return [
-    '/' => ['accueilController', 'Accueil'],
-    '/accueil' => ['accueilController', 'Accueil'],
-    '/mentionsLegales' => ['mentionsLegalesControleur', 'MentionsLegales'],
-    '/user-add' => ['userControleur', 'addUser']
+    '/' => ['AccueilController', 'Accueil'],
+    '/accueil' => ['AccueilController', 'Accueil'],
+    '/mentionsLegales' => ['MentionsLegalesControleur', 'MentionsLegales'],
+    '/user-add' => ['UserControleur', 'addUser']
 ];

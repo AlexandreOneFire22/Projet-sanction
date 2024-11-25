@@ -16,18 +16,14 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // Recherche de la route correspondante
 if (!isset($routes[$uri])) {
-    $errorController = new \App\Controller\ErrorController();
+    $errorController = new \App\Controllers\ErrorController();
     $errorController->error404();
     exit;
 }
 
 // Récupération du contrôleur et de l'action
 [$controllerName, $action] = $routes[$uri];
-$controllerClass = "App\\Controller\\{$controllerName}";
-
-// Récupération du contrôleur et de l'action
-[$controllerName, $action] = $routes[$uri];
-$controllerClass = "App\\Controller\\{$controllerName}";
+$controllerClass = "App\\Controllers\\{$controllerName}";
 
 try {
     // Instanciation du contrôleur et appel de l'action
@@ -35,16 +31,9 @@ try {
     $controller->$action();
 } catch (\Exception $e) {
     error_log($e->getMessage());
-    $errorController = new \App\Controller\ErrorController();
+    $errorController = new \App\Controllers\ErrorController();
     $errorController->error404();
 }
-
-
-/**
- * @var Doctrine\ORM\EntityManager $entityManager
- */
-
-$entityManager = require_once __DIR__.'/../config/bootstrap.php';
 
 
 

@@ -7,7 +7,7 @@ class AccueilController extends AbstractController
 
     public function Accueil() :void {
 
-        $this->render('accueil/accueil');
+        $this->render('accueil/accueil',"footerMoins");
 
     }
 

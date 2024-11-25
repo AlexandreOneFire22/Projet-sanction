@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 abstract class AbstractController
 {
-    protected function render(string $template, array $data = []): void
+    protected function render(string $template,string $footer, array $data = []): void
     {
         extract($data);
         
@@ -12,7 +12,7 @@ abstract class AbstractController
         require __DIR__ . '/../../views/' . $template . '.php';
         $content = ob_get_clean();
         
-        require __DIR__ . '/../../views/base.php';
+        require __DIR__ . '/../../views/base.php?footer='.$footer;
     }
 
     protected function redirect(string $url): void
