@@ -11,7 +11,7 @@ class UserController extends AbstractController
 {
     private EntityManager $entityManager;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct()
     {
         $this->entityManager = $entityManager;
         $this->repository = $this->entityManager->getRepository(User::class);

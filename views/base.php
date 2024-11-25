@@ -13,7 +13,7 @@
     <nav class="navbar navbar-expand-md bg-info border-bottom border-3 border-primary mb-5">
         <div class="container-fluid mx-2">
             <div class="d-flex justify-content-start">
-                <a class="navbar-brand d-flex" href="/index">
+                <a class="navbar-brand d-flex" href="/">
                     <img src="assets/image/logo.png" width="140">
                     <h1 class="fw-bold text-primary fst-italic align-self-center ms-2" id="nomLogo">my punishment~</h1>
                 </a>
