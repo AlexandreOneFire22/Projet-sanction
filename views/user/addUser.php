@@ -9,15 +9,15 @@
             <div class="mb-3">
                 <label for="prenom" class="form-label fs-5">Prénom* :</label>
                 <input type="text"
-                       class="form-control <?= (isset($erreurs["prenom"])) ? "border border-2 border-danger" : "" ?>"
+                       class="form-control <?= (isset($_SESSION["prenom"])) ? "border border-2 border-danger" : "" ?>"
                        id="prenom"
                        name="prenom"
                        value="<?= (isset($_POST["prenom"])) ? $_POST["prenom"] : null ?>"
                        placeholder="Saisissez votre prénom">
 
-                <?php if (isset($erreurs["prenom"])) : ?>
+                <?php if (isset($_SESSION["prenom"])) : ?>
 
-                    <p class="form-text fs-5 text-danger"> <?= $erreurs["prenom"] ?></p>
+                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["prenom"] ?></p>
 
                 <?php endif; ?>
             </div>
@@ -25,15 +25,15 @@
             <div class="mb-3">
                 <label for="nom" class="form-label fs-5">Nom* :</label>
                 <input type="text"
-                       class="form-control <?= (isset($erreurs["nom"])) ? "border border-2 border-danger" : "" ?>"
+                       class="form-control <?= (isset($_SESSION["nom"])) ? "border border-2 border-danger" : "" ?>"
                        id="nom"
                        name="nom"
                        value="<?= (isset($_POST["nom"])) ? $_POST["nom"] : null ?>"
                        placeholder="Saisissez votre nom">
 
-                <?php if (isset($erreurs["nom"])) : ?>
+                <?php if (isset($_SESSION["nom"])) : ?>
 
-                    <p class="form-text fs-5 text-danger"> <?= $erreurs["nom"] ?></p>
+                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["nom"] ?></p>
 
                 <?php endif; ?>
             </div>
@@ -41,15 +41,15 @@
             <div class="mb-3">
                 <label for="email" class="form-label fs-5">Email* :</label>
                 <input type="email"
-                       class="form-control <?= (isset($erreurs["email"])) ? "border border-2 border-danger" : "" ?>"
+                       class="form-control <?= (isset($_SESSION["email"])) ? "border border-2 border-danger" : "" ?>"
                        id="email"
                        name="email"
                        value="<?= (isset($_POST["email"])) ? $_POST["email"] : null ?>"
                        placeholder="Saisissez votre email">
 
-                <?php if (isset($erreurs["email"])) : ?>
+                <?php if (isset($_SESSION["email"])) : ?>
 
-                    <p class="form-text fs-5 text-danger"> <?= $erreurs["email"] ?></p>
+                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["email"] ?></p>
 
                 <?php endif; ?>
             </div>
@@ -57,15 +57,15 @@
             <div class="mb-3">
                 <label for="password" class="form-label fs-5">Mot de passe* :</label>
                 <input type="password"
-                       class="form-control <?= (isset($erreurs["password"])) ? "border border-2 border-danger" : "" ?>"
+                       class="form-control <?= (isset($_SESSION["password"])) ? "border border-2 border-danger" : "" ?>"
                        id="password"
                        name="password"
                        value=""
                        placeholder="Saisissez votre mot de passe">
 
-                <?php if (isset($erreurs["password"])) : ?>
+                <?php if (isset($_SESSION["password"])) : ?>
 
-                    <?php foreach ($erreurs["password"] as $erreur) : ?>
+                    <?php foreach ($_SESSION["password"] as $erreur) : ?>
 
                     <p class="form-text fs-5 text-danger"> <?= $erreur ?></p>
 
@@ -77,15 +77,15 @@
             <div class="mb-3">
                 <label for="passwordVerif" class="form-label fs-5">Confirmer le mot de passe* :</label>
                 <input type="password"
-                       class="form-control <?= (isset($erreurs["passwordVerif"])) ? "border border-2 border-danger" : "" ?>"
+                       class="form-control <?= (isset($_SESSION["passwordVerif"])) ? "border border-2 border-danger" : "" ?>"
                        id="passwordVerif"
                        name="passwordVerif"
                        value=""
                        placeholder="Saisissez à nouveau votre mot de passe">
 
-                <?php if (isset($erreurs["passwordVerif"])) : ?>
+                <?php if (isset($_SESSION["passwordVerif"])) : ?>
 
-                    <p class="form-text fs-5 text-danger"> <?= $erreurs["passwordVerif"] ?></p>
+                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["passwordVerif"] ?></p>
 
                 <?php endif; ?>
             </div>

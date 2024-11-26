@@ -125,6 +125,7 @@ class UserController extends AbstractController
 
                 $this->render('accueil/accueil',"footerMoins");
             }else{
+                $_SESSION = $erreurs;
                 $this->render('user/addUser',"footerPlus");
             }
         }else{
