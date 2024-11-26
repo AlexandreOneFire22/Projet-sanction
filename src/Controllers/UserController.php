@@ -21,9 +21,11 @@ class UserController extends AbstractController
         $this->repository = $this->entityManager->getRepository(User::class);
     }
 
+
     public function addUser(){
 
         if ($_SERVER["REQUEST_METHOD"] === "POST"){
+
 
             //Vérification des données saisie :
 
