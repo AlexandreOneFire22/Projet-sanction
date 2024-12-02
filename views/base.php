@@ -25,16 +25,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
-                    <?php if (isset($_SESSION["pseudo"])): ?>
+                    <?php if (isset($_SESSION["user"])): ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fs-3 text-blanc me-4" href="#" role="button" data-bs-toggle="dropdown">
-                                <?= $_SESSION["pseudo"] ?>
+                                <?= $_SESSION["user"]["prenom"] ?> <?= $_SESSION["user"]["nom"] ?>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="">Ajouter un film</a></li>
                                 <li><a class="dropdown-item" href="">Liste de mes films</a></li>
                                 <li>----------------------------------------</li>
-                                <li><a class="dropdown-item" href="">Se déconnecter</a></li>
+                                <li><a class="dropdown-item" href="/seDeconnecter">Se déconnecter</a></li>
                             </ul>
                         </li>
                     <?php else: ?>
@@ -42,7 +42,7 @@
                             <a class="nav-link fs-3 fw-bold" href="/creerUnCompte">|créer un compte| </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-3 fw-bold" href="">|se connecter|</a>
+                            <a class="nav-link fs-3 fw-bold" href="/seConnecter">|se connecter|</a>
                         </li>
                     <?php endif; ?>
                 </ul>

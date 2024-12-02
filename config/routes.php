@@ -4,5 +4,7 @@ return [
     '/' => ['AccueilController', 'Accueil'],
     '/index' => ['AccueilController', 'Accueil'],
     '/mentionsLegales' => ['MentionsLegalesController', 'MentionsLegales'],
-    '/creerUnCompte' => ['UserController', 'creerUnCompte']
+    '/creerUnCompte' => ['UserController', 'creerUnCompte'],
+    '/seConnecter' => ['UserController', 'seConnecter'],
+    '/seDeconnecter' => ['UserController', 'seDeconnecter']
 ];

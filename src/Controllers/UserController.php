@@ -4,8 +4,7 @@ namespace App\Controllers;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
-
-require_once __DIR__.'/../../vendor/autoload.php';
+use Doctrine\ORM\EntityRepository;
 
 class UserController extends AbstractController
 {
@@ -15,9 +14,9 @@ class UserController extends AbstractController
      * @var Doctrine\ORM\EntityManager $entityManager
      */
 
-    public function __construct()
+    public function __construct(EntityManager $entityManager)
     {
-        $this->entityManager = require_once __DIR__.'/../../config/bootstrap.php';
+        $this->entityManager = $entityManager;
         $this->repository = $this->entityManager->getRepository(User::class);
     }
 
@@ -125,7 +124,7 @@ class UserController extends AbstractController
 
                 $this->render('accueil/accueil',"footerMoins");
             }else{
-                $_SESSION = $erreurs;
+                $_SESSION ["erreurs"] = $erreurs;
                 $this->render('user/creerUnCompte',"footerPlus");
             }
         }else{
@@ -158,32 +157,39 @@ class UserController extends AbstractController
 
             }elseif (empty($this->repository->findOneBy(['email' => $email]))){
                 $erreurs ["connection"] = "L'email ou le mot de passe sont invalide.";
+            }else{
+                if (!password_verify($password,$this->repository->findOneBy(['email' => $email])->getPassword())){
+                    $erreurs ["connection"] = "L'email ou le mot de passe sont invalide.";
+                }
             }
-
 
             if (empty($password)){
-                $erreurs ["password"] [] = "Le mot de passe est obligatoire.";
-            }elseif (!password_verify($password,$this->repository->findOneBy(['email' => $email])["password"])){
-                $erreurs ["connection"] = "L'email ou le mot de passe sont invalide.";
+                $erreurs ["password"] = "Le mot de passe est obligatoire.";
             }
-
 
             if (empty($erreurs)) {
 
                 $user = $this->repository->findOneBy(['email' => $email]);
 
-                $_SESSION ["user"] ["nom"] = $user["nom"];
+                $_SESSION ["user"] ["nom"] = $user->getNom();
+                $_SESSION ["user"] ["prenom"] = $user->getPrenom();
+                $_SESSION ["user"] ["id"] = $user->getId();
 
 
                 $this->render('accueil/accueil',"footerMoins");
             }else{
                 $_SESSION ["erreurs"] = $erreurs;
-                $this->render('user/creerUnCompte',"footerPlus");
+                $this->render('user/seConnecter',"footerMoins");
             }
         }else{
-            $this->render('user/creerUnCompte',"footerPlus");
+            $this->render('user/seConnecter',"footerMoins");
         }
 
+    }
+
+    public function seDeconnecter(){
+        $_SESSION = [];
+        $this->render('accueil/accueil',"footerMoins");
     }
 
 
