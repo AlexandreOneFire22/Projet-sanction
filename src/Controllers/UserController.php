@@ -22,7 +22,7 @@ class UserController extends AbstractController
     }
 
 
-    public function addUser(){
+    public function creerUnCompte(){
 
         if ($_SERVER["REQUEST_METHOD"] === "POST"){
 
@@ -126,15 +126,65 @@ class UserController extends AbstractController
                 $this->render('accueil/accueil',"footerMoins");
             }else{
                 $_SESSION = $erreurs;
-                $this->render('user/addUser',"footerPlus");
+                $this->render('user/creerUnCompte',"footerPlus");
             }
         }else{
-            $this->render('user/addUser',"footerPlus");
+            $this->render('user/creerUnCompte',"footerPlus");
         }
 
     }
 
 
+
+
+
+
+    public function seConnecter(){
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST"){
+
+
+            //Vérification des données saisie :
+
+            $email = $_POST["email"];
+            $password = $_POST["password"];
+
+            $erreurs = [];
+
+            if (empty($email)) {
+                $erreurs ["email"] = "L'adresse email est obligatoire.";
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $erreurs ["email"] = "L'adresse email n'est pas valide.";
+
+            }elseif (empty($this->repository->findOneBy(['email' => $email]))){
+                $erreurs ["connection"] = "L'email ou le mot de passe sont invalide.";
+            }
+
+
+            if (empty($password)){
+                $erreurs ["password"] [] = "Le mot de passe est obligatoire.";
+            }elseif (!password_verify($password,$this->repository->findOneBy(['email' => $email])["password"])){
+                $erreurs ["connection"] = "L'email ou le mot de passe sont invalide.";
+            }
+
+
+            if (empty($erreurs)) {
+
+                $user = $this->repository->findOneBy(['email' => $email]);
+
+                $_SESSION ["user"] ["nom"] = $user["nom"];
+
+
+                $this->render('accueil/accueil',"footerMoins");
+            }else{
+                $_SESSION ["erreurs"] = $erreurs;
+                $this->render('user/creerUnCompte',"footerPlus");
+            }
+        }else{
+            $this->render('user/creerUnCompte',"footerPlus");
+        }
+
+    }
 
 
 

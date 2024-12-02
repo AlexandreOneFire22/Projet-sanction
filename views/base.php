@@ -39,7 +39,7 @@
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link fs-3 fw-bold" href="/user-add">|créer un compte| </a>
+                            <a class="nav-link fs-3 fw-bold" href="/creerUnCompte">|créer un compte| </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fs-3 fw-bold" href="">|se connecter|</a>
