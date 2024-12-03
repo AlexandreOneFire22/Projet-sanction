@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use App\Controllers\ErrorController;
 
 class UserController extends AbstractController
 {
@@ -22,6 +23,14 @@ class UserController extends AbstractController
 
 
     public function creerUnCompte(){
+
+        if (isset($_SESSION ["user"])){
+            $pageErreur = new ErrorController();
+            $pageErreur->pageErreur("vous êtes déjà connecté à un compte.",
+            "Si vous souhaiter accèder à cette page vous devez d'abord vous déconnecter.",
+            "/seDeconnecter", "Se déconnecter");
+            exit();
+        }
 
         if ($_SERVER["REQUEST_METHOD"] === "POST"){
 
@@ -139,6 +148,14 @@ class UserController extends AbstractController
 
 
     public function seConnecter(){
+
+        if (isset($_SESSION ["user"])){
+            $pageErreur = new ErrorController();
+            $pageErreur->pageErreur("vous êtes déjà connecté à un compte.",
+                "Si vous souhaiter accèder à cette page vous devez d'abord vous déconnecter.",
+                "/seDeconnecter", "Se déconnecter");
+            exit();
+        }
 
         if ($_SERVER["REQUEST_METHOD"] === "POST"){
 

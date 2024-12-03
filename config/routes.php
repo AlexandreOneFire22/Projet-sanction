@@ -6,5 +6,6 @@ return [
     '/mentionsLegales' => ['MentionsLegalesController', 'MentionsLegales'],
     '/creerUnCompte' => ['UserController', 'creerUnCompte'],
     '/seConnecter' => ['UserController', 'seConnecter'],
-    '/seDeconnecter' => ['UserController', 'seDeconnecter']
+    '/seDeconnecter' => ['UserController', 'seDeconnecter'],
+    '/pageErreur' => ['ErrorController', 'pageErreur']
 ];

@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityManager;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+session_start();
+
 $entityManager = require_once __DIR__.'/../config/bootstrap.php';
 
 // Récupération des routes
