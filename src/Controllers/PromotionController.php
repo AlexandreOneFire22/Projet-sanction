@@ -22,110 +22,53 @@ class PromotionController extends AbstractController
     }
 
 
-    public function creerUnCompte(){
+    public function creerUnePromotion(){
 
-        if (isset($_SESSION ["user"])){
+        if (!isset($_SESSION ["user"])){
             $pageErreur = new ErrorController();
-            $pageErreur->pageErreur("vous êtes déjà connecté à un compte.",
-                "Si vous souhaiter accèder à cette page vous devez d'abord vous déconnecter.",
-                "/seDeconnecter", "Se déconnecter");
+            $pageErreur->pageErreur("vous n'êtes pas connecté à un compte.",
+                "Si vous souhaiter accèder à cette page vous devez être connecté à un compte pour accéder à cette page.",
+                "/seConnecter", "Se connecter");
             exit();
         }
 
-        if ($_SERVER["REQUEST_METHOD"] === "POST"){
+        $_SESSION["erreurs"] = [];
 
+        if ($_SERVER["REQUEST_METHOD"] === "POST"){
 
             //Vérification des données saisie :
 
-            $prenom = $_POST["prenom"];
-            $nom = $_POST["nom"];
-            $email = $_POST["email"];
-            $password = $_POST["password"];
-            $passwordVerif = $_POST["passwordVerif"];
+            $libelle = $_POST["libelle"];
+            $annee = $_POST["annee"];
 
             $erreurs = [];
 
-            if (empty($prenom)) {
-                $erreurs ["prenom"] = "La saisie du prénom est obligatoire.";
+            if (empty($libelle)) {
+                $erreurs ["libelle"] = "La saisie du libellé est obligatoire.";
             }
 
-            if (empty($nom)) {
-                $erreurs ["nom"] = "La saisie du nom est obligatoire.";
+            if (empty($annee)) {
+                $erreurs ["annee"] = "La saisie de l'année est obligatoire.";
+            }elseif (strlen($annee)!=4){
+                $erreurs ["annee"] = "L'année n'est pas valide.";
             }
 
-            if (empty($email)) {
-                $erreurs ["email"] = "L'adresse email est obligatoire.";
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $erreurs ["email"] = "L'adresse email n'est pas valide.";
+            $recherche = $this->repository->findOneBy(['libelle' => $libelle]);
 
-            }elseif (!empty($this->repository->findOneBy(['email' => $email]))){
-                $erreurs ["email"] = "Cette adresse email est déjà utilisé.";
-            }
-
-            $passwordParLettre = str_split($password);
-
-            if (empty($password)){
-                $erreurs ["password"] [] = "Le mot de passe est obligatoire.";
-            }elseif (strlen($password)<8){
-                $erreurs ["password"] [] = "Le mot de passe doit comporter plus de 8 caractère.";
-            }
-
-            $tabPassword = str_split($password);
-
-            $minusculePresent = false;
-            $majusculePresent = false;
-            $chiffrePresent = false;
-
-            foreach ($tabPassword as $lettre) {
-
-                $assciiLetttre = ord($lettre);
-
-                switch (true) {
-                    case ($assciiLetttre >= 48 && $assciiLetttre <= 57):
-                        $chiffrePresent = true;
-                        break;
-
-                    case ($assciiLetttre >= 65 && $assciiLetttre <= 90):
-                        $majusculePresent = true;
-                        break;
-
-                    case ($assciiLetttre >= 97 && $assciiLetttre <= 122):
-                        $minusculePresent = true;
-                        break;
+            if (!empty($recherche)){
+                if ($recherche->getAnnee() == $annee){
+                    $erreurs ["promotion"] = "Cette promotion existe déjà.";
                 }
-            }
-
-            if (!$minusculePresent) {
-                $erreurs ["password"] [] = "Le mot de passe doit comporter au moins une minuscule.";
-            }
-
-            if (!$majusculePresent) {
-                $erreurs ["password"] [] = "Le mot de passe doit comporter au moins une majuscule.";
-            }
-
-            if (!$chiffrePresent) {
-                $erreurs ["password"] [] = "Le mot de passe doit comporter au moins un chiffre.";
-            }
-
-
-            if (empty($passwordVerif)) {
-                $erreurs ["passwordVerif"] = "Le mot de passe doit être à nouveau saisie.";
-            }elseif ($password!=$passwordVerif){
-                $erreurs ["passwordVerif"] = "Le mot de passe saisie est différent, il doit être identique.";
             }
 
             if (empty($erreurs)) {
                 //ajout des données dans la base de données :
-                $user = new User();
-                $user->setNom($_POST["nom"]);
-                $user->setPrenom($_POST["prenom"]);
-                $user->setEmail($_POST["email"]);
 
-                $passwordHash = password_hash($_POST["password"], PASSWORD_DEFAULT);
+                $promotion = new Promotion();
+                $promotion->setLibelle($_POST["libelle"]);
+                $promotion->setAnnee($_POST["annee"]);
 
-                $user->setPassword($passwordHash);
-
-                $this->entityManager->persist($user); //persist n'exécute pas directement le insert
+                $this->entityManager->persist($promotion); //persist n'exécute pas directement le insert
 
                 //Valider le Insert
 
@@ -134,10 +77,10 @@ class PromotionController extends AbstractController
                 $this->render('accueil/accueil',"footerMoins");
             }else{
                 $_SESSION ["erreurs"] = $erreurs;
-                $this->render('user/creerUnCompte',"footerPlus");
+                $this->render('promotion/creerUnePromotion',"footerMoins");
             }
         }else{
-            $this->render('user/creerUnCompte',"footerPlus");
+            $this->render('promotion/creerUnePromotion',"footerMoins");
         }
 
     }

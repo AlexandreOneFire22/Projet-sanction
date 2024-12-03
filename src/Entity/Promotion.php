@@ -16,7 +16,7 @@ class Promotion
     #[ORM\Column(name: "libelle_promotion", type: "string", length: 100)]
     private string $libelle;
 
-    #[ORM\Column(name: "annee_promotion", type: "date")]
+    #[ORM\Column(name: "annee_promotion", type: "string")]
     private string $annee;
 
     /**

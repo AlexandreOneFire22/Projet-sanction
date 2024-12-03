@@ -32,6 +32,8 @@ class UserController extends AbstractController
             exit();
         }
 
+        $_SESSION["erreurs"] = [];
+
         if ($_SERVER["REQUEST_METHOD"] === "POST"){
 
 

@@ -7,5 +7,6 @@ return [
     '/creerUnCompte' => ['UserController', 'creerUnCompte'],
     '/seConnecter' => ['UserController', 'seConnecter'],
     '/seDeconnecter' => ['UserController', 'seDeconnecter'],
+    '/creerUnePromotion' => ['PromotionController', 'creerUnePromotion'],
     '/pageErreur' => ['ErrorController', 'pageErreur']
 ];
