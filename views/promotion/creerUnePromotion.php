@@ -4,7 +4,7 @@
     <h1 class="ms-5 mb-3">Créer une promotion :</h1>
 
     <div class="w-75 mx-auto">
-        <form method="post" action="/creerUnePromotion" novalidate>
+        <form method="post" novalidate>
 
             <div class="mb-3">
                 <label for="libelle" class="form-label fs-5">Libelle* :</label>

@@ -32,6 +32,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/creerUnePromotion">Ajouter une promotion</a></li>
+                                <li><a class="dropdown-item" href="/ajouterEtudiant">Ajouter des étudiants</a></li>
                                 <li>----------------------------------------</li>
                                 <li><a class="dropdown-item" href="/seDeconnecter">Se déconnecter</a></li>
                             </ul>

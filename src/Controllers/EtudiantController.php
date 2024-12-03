@@ -2,12 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Entity\Etudiant;
 use App\Entity\Promotion;
 use Doctrine\ORM\EntityManager;
+use League\Csv\Reader;
 use Doctrine\ORM\EntityRepository;
 use App\Controllers\ErrorController;
 
-class PromotionController extends AbstractController
+class EtudiantController extends AbstractController
 {
     private EntityManager $entityManager;
 
@@ -18,11 +20,11 @@ class PromotionController extends AbstractController
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->repository = $this->entityManager->getRepository(Promotion::class);
+        $this->repository = $this->entityManager->getRepository(Etudiant::class);
     }
 
 
-    public function creerUnePromotion(){
+    public function ajouterEtudiant(){
 
         if (!isset($_SESSION ["user"])){
             $pageErreur = new ErrorController();
@@ -34,38 +36,43 @@ class PromotionController extends AbstractController
 
         $_SESSION["erreurs"] = [];
 
+        $repository = $this->entityManager->getRepository(Promotion::class);
+        $promotion = $repository->findAll();
+        foreach ($promotion as $item){
+
+            $titre = $item->getLibelle()." ".$item->getAnnee();
+
+            $_SESSION["promotion"][] = [$titre,$item->getId()];
+        }
+
+        print_r($_SESSION["promotion"]);
+        echo "000000000000000000000000000000000000000";
+        print_r($_SESSION["promotion"][0]);
+
         if ($_SERVER["REQUEST_METHOD"] === "POST"){
 
             //Vérification des données saisie :
 
-            $libelle = $_POST["libelle"];
-            $annee = $_POST["annee"];
 
-            $erreurs = [];
+            //load the CSV document from a file path
+            $csv = Reader::createFromPath('/path/to/your/csv/file.csv', 'r');
+            $csv->setHeaderOffset(0);
 
-            if (empty($libelle)) {
-                $erreurs ["libelle"] = "La saisie du libellé est obligatoire.";
-            }
+            $header = $csv->getHeader(); //returns the CSV header record
 
-            if (empty($annee)) {
-                $erreurs ["annee"] = "La saisie de l'année est obligatoire.";
-            }elseif (strlen($annee)!=4){
-                $erreurs ["annee"] = "L'année n'est pas valide.";
-            }
+            //returns all the records as
+            $records = $csv->getRecords(); // an Iterator object containing arrays
+            $records = $csv->getRecordsAsObject(MyDTO::class); //an Iterator object containing MyDTO objects
 
-            $recherche = $this->repository->findOneBy(['libelle' => $libelle]);
+            echo $csv->toString(); //returns the CSV document as a string
 
-            if (!empty($recherche)){
-                if ($recherche->getAnnee() == $annee){
-                    $erreurs ["promotion"] = "Cette promotion existe déjà.";
-                }
-            }
+            $erreurs = ["cc"];
 
             if (empty($erreurs)) {
                 //ajout des données dans la base de données :
 
-                $promotion = new Promotion();
-                $promotion->setLibelle($_POST["libelle"]);
+                $promotion = new Etudiant();
+                $promotion->setPrenom($_POST["libelle"]);
                 $promotion->setAnnee($_POST["annee"]);
 
                 $this->entityManager->persist($promotion); //persist n'exécute pas directement le insert
@@ -80,7 +87,7 @@ class PromotionController extends AbstractController
                 $this->render('promotion/creerUnePromotion',"footerMoins");
             }
         }else{
-            $this->render('promotion/creerUnePromotion',"footerMoins");
+            $this->render('etudiant/ajouterEtudiant',"footerMoins");
         }
 
     }

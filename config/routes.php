@@ -8,5 +8,6 @@ return [
     '/seConnecter' => ['UserController', 'seConnecter'],
     '/seDeconnecter' => ['UserController', 'seDeconnecter'],
     '/creerUnePromotion' => ['PromotionController', 'creerUnePromotion'],
+    '/ajouterEtudiant' => ['EtudiantController', 'ajouterEtudiant'],
     '/pageErreur' => ['ErrorController', 'pageErreur']
 ];
