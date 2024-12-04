@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityManager;
 use League\Csv\Reader;
 use Doctrine\ORM\EntityRepository;
 use App\Controllers\ErrorController;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 
 class EtudiantController extends AbstractController
 {
@@ -54,9 +56,12 @@ class EtudiantController extends AbstractController
             //Vérification des données saisie :
 
 
-            //load the CSV document from a file path
+            //$csv = Reader::createFromPath($_POST["csvEtudiant"], 'r');
 
-            $csv = Reader::createFromPath($_POST["csvEtudiant"], 'r');
+            //(new UsersImport)->import('users.csv', null, \Maatwebsite\Excel\Excel::CSV);
+
+
+
 
             $erreurs = ["cc"];
 
