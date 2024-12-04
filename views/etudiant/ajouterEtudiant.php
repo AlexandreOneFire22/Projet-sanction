@@ -12,13 +12,15 @@
                        class="form-control"
                        id="csvEtudiant"
                        name="csvEtudiant"
+                       accept=".csv"
                 >
             </div>
 
             <div class="mb-3">
                 <label for="promotion" class="form-label fs-5">Promotion* :</label>
                 <select id="promotion" name="promotion" class="form-select">
-                    <?php for ($i = 0; $i <= count($_SESSION["promotion"]); $i++) : ?>
+
+                    <?php for ($i = 0; $i <= count($_SESSION["promotion"])-1; $i++) : ?>
 
                         <option value="<?= $_SESSION["promotion"][$i][1] ?>"> <?= $_SESSION["promotion"][$i][0] ?> </option>
 

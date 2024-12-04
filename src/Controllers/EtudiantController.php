@@ -35,9 +35,11 @@ class EtudiantController extends AbstractController
         }
 
         $_SESSION["erreurs"] = [];
+        $_SESSION["promotion"] = [];
 
         $repository = $this->entityManager->getRepository(Promotion::class);
-        $promotion = $repository->findAll();
+        $promotion = $repository->findBy([], ['annee' => 'DESC']);
+
         foreach ($promotion as $item){
 
             $titre = $item->getLibelle()." ".$item->getAnnee();
@@ -45,9 +47,7 @@ class EtudiantController extends AbstractController
             $_SESSION["promotion"][] = [$titre,$item->getId()];
         }
 
-        print_r($_SESSION["promotion"]);
-        echo "000000000000000000000000000000000000000";
-        print_r($_SESSION["promotion"][0]);
+
 
         if ($_SERVER["REQUEST_METHOD"] === "POST"){
 
@@ -55,16 +55,8 @@ class EtudiantController extends AbstractController
 
 
             //load the CSV document from a file path
-            $csv = Reader::createFromPath('/path/to/your/csv/file.csv', 'r');
-            $csv->setHeaderOffset(0);
 
-            $header = $csv->getHeader(); //returns the CSV header record
-
-            //returns all the records as
-            $records = $csv->getRecords(); // an Iterator object containing arrays
-            $records = $csv->getRecordsAsObject(MyDTO::class); //an Iterator object containing MyDTO objects
-
-            echo $csv->toString(); //returns the CSV document as a string
+            $csv = Reader::createFromPath($_POST["csvEtudiant"], 'r');
 
             $erreurs = ["cc"];
 
@@ -84,7 +76,7 @@ class EtudiantController extends AbstractController
                 $this->render('accueil/accueil',"footerMoins");
             }else{
                 $_SESSION ["erreurs"] = $erreurs;
-                $this->render('promotion/creerUnePromotion',"footerMoins");
+                $this->render('etudiant/ajouterEtudiant',"footerMoins");
             }
         }else{
             $this->render('etudiant/ajouterEtudiant',"footerMoins");
