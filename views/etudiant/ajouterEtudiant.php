@@ -9,11 +9,18 @@
             <div class="mb-3">
                 <label for="csvEtudiant" class="form-label fs-5">Fichier en .csv des étudiants* :</label>
                 <input type="file"
-                       class="form-control"
+                       class="form-control <?= (isset($_SESSION["erreurs"]["fichier"])) ? "border border-2 border-danger" : "" ?>"
                        id="csvEtudiant"
                        name="csvEtudiant"
-                       accept=".csv"
-                >
+                       accept=".csv">
+
+                <?php if (isset($_SESSION["erreurs"]["fichier"])) : ?>
+
+                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["erreurs"]["fichier"] ?></p>
+
+                <?php endif; ?>
+
+
             </div>
 
             <div class="mb-3">

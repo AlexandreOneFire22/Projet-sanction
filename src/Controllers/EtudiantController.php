@@ -39,12 +39,15 @@ class EtudiantController extends AbstractController
         $_SESSION["erreurs"] = [];
         $_SESSION["promotion"] = [];
 
+
+
+
         $repository = $this->entityManager->getRepository(Promotion::class);
         $promotion = $repository->findBy([], ['annee' => 'DESC']);
 
         foreach ($promotion as $item){
 
-            $titre = $item->getLibelle()." ".$item->getAnnee();
+            $titre = $item->getLibelle().", ".$item->getAnnee();
 
             $_SESSION["promotion"][] = [$titre,$item->getId()];
         }
@@ -58,27 +61,41 @@ class EtudiantController extends AbstractController
 
             //$csv = Reader::createFromPath($_POST["csvEtudiant"], 'r');
 
-            //(new UsersImport)->import('users.csv', null, \Maatwebsite\Excel\Excel::CSV);
 
 
+
+            //if(!isset($_FILES['csvEtudiant']))
+            //{
+                //echo "cc";
+                //$erreurs ["fichier"] = "L'importation d'un fichier CSV est obligatoire";
+            //}else {
+                print_r($_FILES);
+            //}
+
+
+            //$fichierCSV->import('users.csv', null, \Maatwebsite\Excel\Excel::CSV);
 
 
             $erreurs = ["cc"];
 
             if (empty($erreurs)) {
-                //ajout des données dans la base de données :
 
-                $promotion = new Etudiant();
-                $promotion->setPrenom($_POST["libelle"]);
-                $promotion->setAnnee($_POST["annee"]);
+                $donnee = Reader::createFromFileObject($fichierCSV);
+                echo $donnee->count();
+                echo $donnee->toString();
 
-                $this->entityManager->persist($promotion); //persist n'exécute pas directement le insert
+                //$promotion = new Etudiant();
+                //$promotion->setPrenom($_POST["libelle"]);
+                //$promotion->setAnnee($_POST["annee"]);
+
+                //$this->entityManager->persist($promotion); //persist n'exécute pas directement le insert
 
                 //Valider le Insert
 
-                $this->entityManager->flush(); // flush Réalise le Insert
+                //$this->entityManager->flush(); // flush Réalise le Insert
 
-                $this->render('accueil/accueil',"footerMoins");
+                //$this->render('accueil/accueil',"footerMoins");
+                $this->render('etudiant/ajouterEtudiant',"footerMoins");
             }else{
                 $_SESSION ["erreurs"] = $erreurs;
                 $this->render('etudiant/ajouterEtudiant',"footerMoins");
