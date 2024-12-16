@@ -19,9 +19,7 @@ class Etudiant
     #[ORM\Column(name: "nom_etudiant", type: "string", length: 50)]
     private string $nom;
 
-    #[ORM\Column(name: "id_promotion", type: "integer")]
-
-    #[ORM\ManyToOne(targetEntity: Promotion::class, inversedBy: "etudiant")]
+    #[ORM\ManyToOne(targetEntity: Promotion::class)]
     #[ORM\JoinColumn(name: "id_promotion", nullable: false)]
     private Promotion $promotion;
 
@@ -82,7 +80,8 @@ class Etudiant
     }
 
     /**
-     * @param Promotion $id_promotion
+     * @param Promotion|null $id_promotion
+     * @return Etudiant
      */
     public function setPromotion(?Promotion $id_promotion): self
     {

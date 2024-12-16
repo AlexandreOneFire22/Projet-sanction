@@ -29,7 +29,15 @@
 
                     <?php for ($i = 0; $i <= count($_SESSION["promotion"])-1; $i++) : ?>
 
-                        <option value="<?= $_SESSION["promotion"][$i][1] ?>"> <?= $_SESSION["promotion"][$i][0] ?> </option>
+                        <?php if ($_POST["promotion"] == $_SESSION["promotion"][$i][1]) : ?>
+
+                            <option selected value="<?= $_SESSION["promotion"][$i][1] ?>"> <?= $_SESSION["promotion"][$i][0] ?> </option>
+
+                        <?php else: ?>
+
+                            <option value="<?= $_SESSION["promotion"][$i][1] ?>"> <?= $_SESSION["promotion"][$i][0] ?> </option>
+
+                        <?php endif;?>
 
                     <?php endfor;?>
 

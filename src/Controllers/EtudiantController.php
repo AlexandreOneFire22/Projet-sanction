@@ -51,27 +51,21 @@ class EtudiantController extends AbstractController
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-            if (!isset($_FILES['csvEtudiant'])) {
+            if (empty($_FILES['csvEtudiant']['tmp_name'])) {
                 $erreurs ["fichier"] = "L'importation d'un fichier CSV est obligatoire";
             }
-
-            //$eleves = fopen($_FILES['csvEtudiant']['tmp_name'], 'r');
-
-            //fgetcsv($eleves);
-
-            //while (($data = fgetcsv($eleves) ) !== FALSE ) {
-            //    print_r($data);
-            //}
 
             if (empty($erreurs)) {
 
                 $csv = Reader::createFromPath($_FILES['csvEtudiant']['tmp_name'], 'r');
                 $csv->setHeaderOffset(0);
 
-                //returns all the records as
                 $records = $csv->getRecords();
 
+                echo $_POST["promotion"];
+
                 $promoEleve = $repositoryPromotion->find($_POST["promotion"]);
+
 
                 foreach ($records as $record) {
                     $etudiant = new Etudiant();
@@ -81,8 +75,6 @@ class EtudiantController extends AbstractController
 
                     $this->entityManager->persist($etudiant);
                 }
-
-                //Valider le Insert
 
                 $this->entityManager->flush();
 
