@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use AllowDynamicProperties;
 use App\Entity\Etudiant;
 use App\Entity\Promotion;
 use Doctrine\ORM\EntityManager;
@@ -37,6 +38,9 @@ class EtudiantController extends AbstractController
         $_SESSION["erreurs"] = [];
         $_SESSION["promotion"] = [];
 
+        if (!isset($_POST["promotion"])){
+            $_POST["promotion"] = 1;
+        }
 
         $repositoryPromotion = $this->entityManager->getRepository(Promotion::class);
         $promotion = $repositoryPromotion->findBy([], ['annee' => 'DESC']);
@@ -55,6 +59,13 @@ class EtudiantController extends AbstractController
                 $erreurs ["fichier"] = "L'importation d'un fichier CSV est obligatoire";
             }
 
+
+            $promoEleve = $repositoryPromotion->find($_POST["promotion"]);
+
+            if (!$promoEleve){
+                $erreurs ["promotion"] = "La promotion n'éxiste pas.";
+            }
+
             if (empty($erreurs)) {
 
                 $csv = Reader::createFromPath($_FILES['csvEtudiant']['tmp_name'], 'r');
@@ -62,10 +73,9 @@ class EtudiantController extends AbstractController
 
                 $records = $csv->getRecords();
 
-                echo $_POST["promotion"];
+                echo "id promotion ".$_POST["promotion"];
 
-                $promoEleve = $repositoryPromotion->find($_POST["promotion"]);
-
+                $promoEleve = $repositoryPromotion->findBy(["id" => $_POST["promotion"]]);
 
                 foreach ($records as $record) {
                     $etudiant = new Etudiant();
@@ -73,10 +83,17 @@ class EtudiantController extends AbstractController
                     $etudiant->setNom($record["Nom"]);
                     $etudiant->setPromotion($promoEleve);
 
+                    echo "open : ".$this->entityManager->isOpen();
                     $this->entityManager->persist($etudiant);
                 }
 
-                $this->entityManager->flush();
+                try {
+                    $this->entityManager->flush();
+                }catch (\Exception $exception){
+                    echo "coucou";
+                    echo $exception->getMessage();
+                }
+
 
                 $this->render('accueil/accueil', "footerMoins");
             } else {

@@ -25,7 +25,7 @@
 
             <div class="mb-3">
                 <label for="promotion" class="form-label fs-5">Promotion* :</label>
-                <select id="promotion" name="promotion" class="form-select">
+                <select id="promotion" name="promotion" class="form-select <?= (isset($_SESSION["erreurs"]["promotion"])) ? "border border-2 border-danger" : "" ?>">
 
                     <?php for ($i = 0; $i <= count($_SESSION["promotion"])-1; $i++) : ?>
 
@@ -42,6 +42,12 @@
                     <?php endfor;?>
 
                 </select>
+
+                <?php if (isset($_SESSION["erreurs"]["promotion"])) : ?>
+
+                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["erreurs"]["promotion"] ?></p>
+
+                <?php endif; ?>
 
             </div>
 
