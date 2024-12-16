@@ -5,11 +5,8 @@ namespace App\Controllers;
 use App\Entity\Etudiant;
 use App\Entity\Promotion;
 use Doctrine\ORM\EntityManager;
-use League\Csv\Reader;
-use Doctrine\ORM\EntityRepository;
-use App\Controllers\ErrorController;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use League\Csv\Reader;
 
 class EtudiantController extends AbstractController
 {
@@ -26,9 +23,10 @@ class EtudiantController extends AbstractController
     }
 
 
-    public function ajouterEtudiant(){
+    public function ajouterEtudiant()
+    {
 
-        if (!isset($_SESSION ["user"])){
+        if (!isset($_SESSION ["user"])) {
             $pageErreur = new ErrorController();
             $pageErreur->pageErreur("vous n'êtes pas connecté à un compte.",
                 "Vous devez être connecté à un compte pour accéder à cette page.",
@@ -40,70 +38,62 @@ class EtudiantController extends AbstractController
         $_SESSION["promotion"] = [];
 
 
+        $repositoryPromotion = $this->entityManager->getRepository(Promotion::class);
+        $promotion = $repositoryPromotion->findBy([], ['annee' => 'DESC']);
 
+        foreach ($promotion as $item) {
 
-        $repository = $this->entityManager->getRepository(Promotion::class);
-        $promotion = $repository->findBy([], ['annee' => 'DESC']);
+            $titre = $item->getLibelle() . " | " . $item->getAnnee();
 
-        foreach ($promotion as $item){
-
-            $titre = $item->getLibelle().", ".$item->getAnnee();
-
-            $_SESSION["promotion"][] = [$titre,$item->getId()];
+            $_SESSION["promotion"][] = [$titre, $item->getId()];
         }
 
 
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        if ($_SERVER["REQUEST_METHOD"] === "POST"){
+            if (!isset($_FILES['csvEtudiant'])) {
+                $erreurs ["fichier"] = "L'importation d'un fichier CSV est obligatoire";
+            }
 
-            //Vérification des données saisie :
+            //$eleves = fopen($_FILES['csvEtudiant']['tmp_name'], 'r');
 
+            //fgetcsv($eleves);
 
-            //$csv = Reader::createFromPath($_POST["csvEtudiant"], 'r');
-
-
-
-
-            //if(!isset($_FILES['csvEtudiant']))
-            //{
-                //echo "cc";
-                //$erreurs ["fichier"] = "L'importation d'un fichier CSV est obligatoire";
-            //}else {
-                print_r($_FILES);
+            //while (($data = fgetcsv($eleves) ) !== FALSE ) {
+            //    print_r($data);
             //}
-
-
-            //$fichierCSV->import('users.csv', null, \Maatwebsite\Excel\Excel::CSV);
-
-
-            $erreurs = ["cc"];
 
             if (empty($erreurs)) {
 
-                $donnee = Reader::createFromFileObject($fichierCSV);
-                echo $donnee->count();
-                echo $donnee->toString();
+                $csv = Reader::createFromPath($_FILES['csvEtudiant']['tmp_name'], 'r');
+                $csv->setHeaderOffset(0);
 
-                //$promotion = new Etudiant();
-                //$promotion->setPrenom($_POST["libelle"]);
-                //$promotion->setAnnee($_POST["annee"]);
+                //returns all the records as
+                $records = $csv->getRecords();
 
-                //$this->entityManager->persist($promotion); //persist n'exécute pas directement le insert
+                $promoEleve = $repositoryPromotion->find($_POST["promotion"]);
+
+                foreach ($records as $record) {
+                    $etudiant = new Etudiant();
+                    $etudiant->setPrenom($record["Prénom"]);
+                    $etudiant->setNom($record["Nom"]);
+                    $etudiant->setPromotion($promoEleve);
+
+                    $this->entityManager->persist($etudiant);
+                }
 
                 //Valider le Insert
 
-                //$this->entityManager->flush(); // flush Réalise le Insert
+                $this->entityManager->flush();
 
-                //$this->render('accueil/accueil',"footerMoins");
-                $this->render('etudiant/ajouterEtudiant',"footerMoins");
-            }else{
+                $this->render('accueil/accueil', "footerMoins");
+            } else {
                 $_SESSION ["erreurs"] = $erreurs;
-                $this->render('etudiant/ajouterEtudiant',"footerMoins");
+                $this->render('etudiant/ajouterEtudiant', "footerMoins");
             }
-        }else{
-            $this->render('etudiant/ajouterEtudiant',"footerMoins");
+        } else {
+            $this->render('etudiant/ajouterEtudiant', "footerMoins");
         }
-
     }
 
 }

@@ -36,9 +36,14 @@ try {
     $controller = new $controllerClass($entityManager);
     $controller->$action();
 } catch (\Exception $e) {
-    error_log($e->getMessage());
-    $errorController = new \App\Controllers\ErrorController();
-    $errorController->error404();
+
+    //error_log($e->getMessage());
+    //$errorController = new \App\Controllers\ErrorController();
+    //$errorController->error404();
+
+
+    $controller = new $controllerClass($entityManager);
+    $controller->$action();
 }
 
 

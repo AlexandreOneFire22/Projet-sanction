@@ -4,7 +4,7 @@
     <h1 class="ms-5 mb-3">Ajouter des étudiants :</h1>
 
     <div class="w-75 mx-auto">
-        <form method="post" novalidate>
+        <form method="post" enctype="multipart/form-data" novalidate>
 
             <div class="mb-3">
                 <label for="csvEtudiant" class="form-label fs-5">Fichier en .csv des étudiants* :</label>
