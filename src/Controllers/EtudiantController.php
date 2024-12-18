@@ -64,11 +64,17 @@ class EtudiantController extends AbstractController
                 $csv->setHeaderOffset(0);
 
                 $records = $csv->getRecords();
+
+                $header = $csv->getHeader();
+
+                if (!in_array("Nom",$header) || !in_array("Prénom",$header)) {
+                    $erreurs ["fichier"] = "Le fichier csv doit comporter un champs 'Nom' et un champs 'Prénom'.";
+                }
             }
 
-            if (!isset($record["Nom"]) || !isset($record["Prénom"])){
-                $erreurs ["fichier"] = "Le fichier csv doit comporter un champs 'Nom' et un champs 'Prénom'.";
-            }
+
+
+
 
 
 
@@ -76,14 +82,15 @@ class EtudiantController extends AbstractController
 
             if (!$promoEleve){
                 $erreurs ["promotion"] = "La promotion n'éxiste pas.";
+            }else{
+                $libellePromotion = $promoEleve->getLibelle() . " | " . $promoEleve->getAnnee();
             }
 
             if (empty($erreurs)) {
 
-
-
-
                 $promoEleve = $this->entityManager->find(Promotion::class, $_POST["promotion"]);
+
+                $nbEtudiantAjouter = 0;
 
                 foreach ($records as $record) {
                     $etudiant = new Etudiant();
@@ -91,6 +98,7 @@ class EtudiantController extends AbstractController
                     $etudiant->setNom($record["Nom"]);
                     $etudiant->setPromotion($promoEleve);
                     $this->entityManager->persist($etudiant);
+                    $nbEtudiantAjouter++;
                 }
 
                 try {
@@ -101,7 +109,8 @@ class EtudiantController extends AbstractController
                 }
 
 
-                $this->render('accueil/accueil', "footerMoins");
+                $this->render('accueil/accueil', "footerMoins", ['libellePromotion' => $libellePromotion,
+                    'nbEtudiantAjouter' => $nbEtudiantAjouter]);
             } else {
                 $_SESSION ["erreurs"] = $erreurs;
                 $this->render('etudiant/ajouterEtudiant', "footerMoins");
