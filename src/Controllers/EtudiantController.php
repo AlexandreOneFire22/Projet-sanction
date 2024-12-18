@@ -7,6 +7,7 @@ use App\Entity\Etudiant;
 use App\Entity\Promotion;
 use Doctrine\ORM\EntityManager;
 use App\Http\Controllers\Controller;
+use Doctrine\ORM\Exception\EntityManagerClosed;
 use League\Csv\Reader;
 
 class EtudiantController extends AbstractController
@@ -57,7 +58,18 @@ class EtudiantController extends AbstractController
 
             if (empty($_FILES['csvEtudiant']['tmp_name'])) {
                 $erreurs ["fichier"] = "L'importation d'un fichier CSV est obligatoire";
+            }else{
+                $csv = Reader::createFromPath($_FILES['csvEtudiant']['tmp_name'], 'r');
+
+                $csv->setHeaderOffset(0);
+
+                $records = $csv->getRecords();
             }
+
+            if (!isset($record["Nom"]) || !isset($record["Prénom"])){
+                $erreurs ["fichier"] = "Le fichier csv doit comporter un champs 'Nom' et un champs 'Prénom'.";
+            }
+
 
 
             $promoEleve = $repositoryPromotion->find($_POST["promotion"]);
@@ -68,22 +80,16 @@ class EtudiantController extends AbstractController
 
             if (empty($erreurs)) {
 
-                $csv = Reader::createFromPath($_FILES['csvEtudiant']['tmp_name'], 'r');
-                $csv->setHeaderOffset(0);
 
-                $records = $csv->getRecords();
 
-                echo "id promotion ".$_POST["promotion"];
 
-                $promoEleve = $repositoryPromotion->findBy(["id" => $_POST["promotion"]]);
+                $promoEleve = $this->entityManager->find(Promotion::class, $_POST["promotion"]);
 
                 foreach ($records as $record) {
                     $etudiant = new Etudiant();
                     $etudiant->setPrenom($record["Prénom"]);
                     $etudiant->setNom($record["Nom"]);
                     $etudiant->setPromotion($promoEleve);
-
-                    echo "open : ".$this->entityManager->isOpen();
                     $this->entityManager->persist($etudiant);
                 }
 
