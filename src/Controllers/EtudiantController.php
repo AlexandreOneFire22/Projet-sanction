@@ -74,10 +74,6 @@ class EtudiantController extends AbstractController
 
 
 
-
-
-
-
             $promoEleve = $repositoryPromotion->find($_POST["promotion"]);
 
             if (!$promoEleve){
