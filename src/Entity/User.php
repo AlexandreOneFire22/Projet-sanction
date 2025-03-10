@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity]
 #[ORM\Table(name: "user")]
@@ -24,6 +26,13 @@ class User
 
     #[ORM\Column(name: "password_user", type: "text")]
     private string $password;
+
+    #[ORM\OneToMany(
+        targetEntity: Sanction::class,
+        mappedBy: "createurSanction",
+        cascade: ["persist", "remove"]
+    )]
+    private Collection $sanction;
 
     /**
      * @return int
@@ -103,6 +112,35 @@ class User
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    /**
+     * @return Collection<int, Sanction>
+     */
+    public function getSanction(): Collection
+    {
+        return $this->sanction;
+    }
+
+    public function addSanction(Sanction $sanction): self
+    {
+        if (!$this->sanction->contains($sanction)) {
+            $this->sanction->add($sanction);
+        }
+
+        return $this;
+    }
+
+    public function removeSanction(Sanction $sanction): self
+    {
+        if ($this->sanction->removeElement($sanction)) {
+            // Définir le côté propriétaire à null (sauf si déjà modifié)
+            if ($sanction->getCreateurSanction() === $this) {
+                $sanction->setCreateurSanction(null);
+            }
+        }
+
+        return $this;
     }
 
 

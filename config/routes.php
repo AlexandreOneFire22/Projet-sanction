@@ -9,5 +9,7 @@ return [
     '/seDeconnecter' => ['UserController', 'seDeconnecter'],
     '/creerUnePromotion' => ['PromotionController', 'creerUnePromotion'],
     '/ajouterEtudiant' => ['EtudiantController', 'ajouterEtudiant'],
+    '/ajouterMotifSanction' => ['MotifSanctionController', 'ajouterMotifSanction'],
+    '/ajouterSanction' => ['SanctionController', 'ajouterSanction'],
     '/pageErreur' => ['ErrorController', 'pageErreur']
 ];
