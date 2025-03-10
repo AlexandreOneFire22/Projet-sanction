@@ -47,7 +47,7 @@ class SanctionController extends AbstractController
         }
 
         $repositoryEtudiant = $this->entityManager->getRepository(Etudiant::class);
-        $etudiant = $repositoryEtudiant->findBy([], ['id_promotion' => 'ASC']);
+        $etudiant = $repositoryEtudiant->findBy([], ['promotion' => 'ASC']);
 
         foreach ($etudiant as $item) {
 
@@ -82,7 +82,7 @@ class SanctionController extends AbstractController
             //    $libellePromotion = $promoEleve->getLibelle() . " | " . $promoEleve->getAnnee();
             //}
 
-            $motif = $repositoryEtudiant->find($_POST["motif"]);
+            $motif = $repositoryMotif->find($_POST["motif"]);
 
             if (!$motif){
                 $erreurs ["motif"] = "Le motif n'éxiste pas.";
@@ -116,7 +116,7 @@ class SanctionController extends AbstractController
                 $sanction->setNomApplicateur($_POST["nomApplicateur"]);
                 $sanction->setMotifSanction($motif);
                 $sanction->setDescription($_POST["description"]);
-                $sanction->setDateIncident($_POST["dateIncident"]);
+                $sanction->setDateIncident(new \DateTime($_POST["dateIncident"]));
                 $sanction->setDateCreation(new \DateTime());
                 $sanction->setCreateurSanction($createur);
 
@@ -131,15 +131,14 @@ class SanctionController extends AbstractController
                 }
 
 
-                $this->render('sanction/ajouterSanction', "footerMoins");
-                //$this->render('accueil/accueil', "footerMoins", ['libellePromotion' => $libellePromotion,
-                //                    'nbEtudiantAjouter' => $nbEtudiantAjouter]);
+                $this->render('accueil/accueil', "footerMoins", ['libellePromotion' => $libellePromotion,
+                                    'nbEtudiantAjouter' => $nbEtudiantAjouter]);
             } else {
                 $_SESSION ["erreurs"] = $erreurs;
-                $this->render('sanction/ajouterSanction', "footerMoins");
+                $this->render('sanction/ajouterSanction', "footerPlus");
             }
         } else {
-            $this->render('sanction/ajouterSanction', "footerMoins");
+            $this->render('sanction/ajouterSanction', "footerPlus");
         }
     }
 

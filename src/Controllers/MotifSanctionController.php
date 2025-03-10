@@ -23,7 +23,7 @@ class MotifSanctionController extends AbstractController
     }
 
 
-    public function creerUnMotif(){
+    public function ajouterMotifSanction(){
 
         if (!isset($_SESSION ["user"])){
             $pageErreur = new ErrorController();

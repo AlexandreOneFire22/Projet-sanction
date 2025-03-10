@@ -14,7 +14,7 @@ class Sanction
     private int $id;
 
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: "sanctions")]
-    #[ORM\JoinColumn(name: "id_etudiant", referencedColumnName: "id_etudiant", nullable: false)]
+    #[ORM\JoinColumn(name: "eleve_sanctionne", referencedColumnName: "id_etudiant", nullable: false)]
     private Etudiant $etudiantSanctionne;
 
     #[ORM\Column(name: "nom_applicateur", type: "string", length: 100)]

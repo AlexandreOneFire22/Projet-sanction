@@ -7,18 +7,18 @@
         <form method="post" novalidate>
 
             <div class="mb-3">
-                <label for="eleve" class="form-label fs-5">Élève sanctionné* :</label>
-                <select id="eleve" name="eleve" class="form-select <?= (isset($_SESSION["erreurs"]["eleve"])) ? "border border-2 border-danger" : "" ?>">
+                <label for="etudiant" class="form-label fs-5">Étudiant sanctionné* :</label>
+                <select id="etudiant" name="etudiant" class="form-select <?= (isset($_SESSION["erreurs"]["etudiant"])) ? "border border-2 border-danger" : "" ?>">
 
-                    <?php for ($i = 0; $i <= count($_SESSION["eleve"])-1; $i++) : ?>
+                    <?php for ($i = 0; $i <= count($_SESSION["etudiant"])-1; $i++) : ?>
 
-                        <?php if ($_POST["eleve"] == $_SESSION["eleve"][$i][1]) : ?>
+                        <?php if ($_POST["etudiant"] == $_SESSION["etudiant"][$i][1]) : ?>
 
-                            <option selected value="<?= $_SESSION["eleve"][$i][1] ?>"> <?= $_SESSION["eleve"][$i][0] ?> </option>
+                            <option selected value="<?= $_SESSION["etudiant"][$i][1] ?>"> <?= $_SESSION["etudiant"][$i][0] ?> </option>
 
                         <?php else: ?>
 
-                            <option value="<?= $_SESSION["eleve"][$i][1] ?>"> <?= $_SESSION["eleve"][$i][0] ?> </option>
+                            <option value="<?= $_SESSION["etudiant"][$i][1] ?>"> <?= $_SESSION["etudiant"][$i][0] ?> </option>
 
                         <?php endif;?>
 
@@ -26,27 +26,27 @@
 
                 </select>
 
-                <?php if (isset($_SESSION["erreurs"]["eleve"])) : ?>
+                <?php if (isset($_SESSION["erreurs"]["etudiant"])) : ?>
 
-                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["erreurs"]["eleve"] ?></p>
+                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["erreurs"]["etudiant"] ?></p>
 
                 <?php endif; ?>
 
             </div>
 
             <div class="mb-3">
-                <label for="motifSanction" class="form-label fs-5">Motif de la sanction* :</label>
-                <select id="motifSanction" name="motifSanction" class="form-select <?= (isset($_SESSION["erreurs"]["motifSanction"])) ? "border border-2 border-danger" : "" ?>">
+                <label for="motif" class="form-label fs-5">Motif de la sanction* :</label>
+                <select id="motif" name="motif" class="form-select <?= (isset($_SESSION["erreurs"]["motif"])) ? "border border-2 border-danger" : "" ?>">
 
-                    <?php for ($i = 0; $i <= count($_SESSION["motifSanction"])-1; $i++) : ?>
+                    <?php for ($i = 0; $i <= count($_SESSION["motif"])-1; $i++) : ?>
 
-                        <?php if ($_POST["motifSanction"] == $_SESSION["motifSanction"][$i][1]) : ?>
+                        <?php if ($_POST["motif"] == $_SESSION["motif"][$i][1]) : ?>
 
-                            <option selected value="<?= $_SESSION["motifSanction"][$i][1] ?>"> <?= $_SESSION["motifSanction"][$i][0] ?> </option>
+                            <option selected value="<?= $_SESSION["motif"][$i][1] ?>"> <?= $_SESSION["motif"][$i][0] ?> </option>
 
                         <?php else: ?>
 
-                            <option value="<?= $_SESSION["motifSanction"][$i][1] ?>"> <?= $_SESSION["motifSanction"][$i][0] ?> </option>
+                            <option value="<?= $_SESSION["motif"][$i][1] ?>"> <?= $_SESSION["motif"][$i][0] ?> </option>
 
                         <?php endif;?>
 
@@ -54,42 +54,42 @@
 
                 </select>
 
-                <?php if (isset($_SESSION["erreurs"]["motifSanction"])) : ?>
+                <?php if (isset($_SESSION["erreurs"]["motif"])) : ?>
 
-                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["erreurs"]["motifSanction"] ?></p>
+                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["erreurs"]["motif"] ?></p>
 
                 <?php endif; ?>
 
             </div>
 
             <div class="mb-3">
-                <label for="Description" class="form-label fs-5">Description* :</label>
+                <label for="description" class="form-label fs-5">Description* :</label>
                 <input type="text"
-                       class="form-control <?= (isset($_SESSION["erreurs"]["Description"])) ? "border border-2 border-danger" : "" ?>"
-                       id="Description"
-                       name="Description"
-                       value="<?= (isset($_POST["Description"])) ? $_POST["Description"] : null ?>"
-                       placeholder="Saisissez une Description">
+                       class="form-control <?= (isset($_SESSION["erreurs"]["description"])) ? "border border-2 border-danger" : "" ?>"
+                       id="description"
+                       name="description"
+                       value="<?= (isset($_POST["description"])) ? $_POST["description"] : null ?>"
+                       placeholder="Saisissez une description">
 
-                <?php if (isset($_SESSION["erreurs"]["Description"])) : ?>
+                <?php if (isset($_SESSION["erreurs"]["description"])) : ?>
 
-                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["erreurs"]["Description"] ?></p>
+                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["erreurs"]["description"] ?></p>
 
                 <?php endif; ?>
             </div>
 
             <div class="mb-3">
-                <label for="DateIncident" class="form-label fs-5">Date incident* :</label>
+                <label for="dateIncident" class="form-label fs-5">Date incident* :</label>
                 <input type="date"
-                       class="form-control <?= (isset($_SESSION["erreurs"]["DateIncident"])) ? "border border-2 border-danger" : "" ?>"
-                       id="DateIncident"
-                       name="DateIncident"
-                       value="<?= (isset($_POST["DateIncident"])) ? $_POST["DateIncident"] : null ?>"
+                       class="form-control <?= (isset($_SESSION["erreurs"]["dateIncident"])) ? "border border-2 border-danger" : "" ?>"
+                       id="dateIncident"
+                       name="dateIncident"
+                       value="<?= (isset($_POST["dateIncident"])) ? $_POST["dateIncident"] : null ?>"
                        placeholder="Saisissez la date de l'incident">
 
-                <?php if (isset($_SESSION["erreurs"]["DateIncident"])) : ?>
+                <?php if (isset($_SESSION["erreurs"]["dateIncident"])) : ?>
 
-                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["erreurs"]["DateIncident"] ?></p>
+                    <p class="form-text fs-5 text-danger"> <?= $_SESSION["erreurs"]["dateIncident"] ?></p>
 
                 <?php endif; ?>
             </div>
