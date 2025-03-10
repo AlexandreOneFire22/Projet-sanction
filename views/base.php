@@ -30,6 +30,7 @@
                             <a class="nav-link dropdown-toggle fs-3 text-blanc me-4" href="#" role="button" data-bs-toggle="dropdown">
                                 <?= $_SESSION["user"]["prenom"] ?> <?= $_SESSION["user"]["nom"] ?>
                             </a>
+
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/creerUnePromotion">Ajouter une promotion</a></li>
                                 <li><a class="dropdown-item" href="/ajouterEtudiant">Ajouter des étudiants</a></li>
