@@ -133,7 +133,7 @@ class UserController extends AbstractController
 
                 $this->entityManager->flush(); // flush Réalise le Insert
 
-                $this->render('accueil/accueil',"footerMoins");
+                $this->render('accueil/accueil',"footerMoins", ['creationCompte' => true]);
             }else{
                 $_SESSION ["erreurs"] = $erreurs;
                 $this->render('user/creerUnCompte',"footerPlus");
@@ -150,6 +150,8 @@ class UserController extends AbstractController
 
 
     public function seConnecter(){
+
+        $_SESSION["erreurs"] = [];
 
         if (isset($_SESSION ["user"])){
             $pageErreur = new ErrorController();

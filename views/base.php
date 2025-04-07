@@ -31,7 +31,7 @@
                                 <?= $_SESSION["user"]["prenom"] ?> <?= $_SESSION["user"]["nom"] ?>
                             </a>
 
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu me-5">
                                 <li><a class="dropdown-item" href="/creerUnePromotion">Ajouter une promotion</a></li>
                                 <li><a class="dropdown-item" href="/ajouterEtudiant">Ajouter des étudiants</a></li>
                                 <li><a class="dropdown-item" href="/ajouterMotifSanction">Ajouter un motif de sanction</a></li>

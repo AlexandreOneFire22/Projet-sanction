@@ -67,7 +67,7 @@ class MotifSanctionController extends AbstractController
 
                 $this->entityManager->flush(); // flush Réalise le Insert
 
-                $this->render('sanction/ajouterMotifSanction',"footerMoins");
+                $this->render('accueil/accueil',"footerMoins");
             }else{
                 $_SESSION ["erreurs"] = $erreurs;
                 $this->render('sanction/ajouterMotifSanction',"footerMoins");

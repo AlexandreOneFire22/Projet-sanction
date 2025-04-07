@@ -131,8 +131,7 @@ class SanctionController extends AbstractController
                 }
 
 
-                $this->render('accueil/accueil', "footerMoins", ['libellePromotion' => $libellePromotion,
-                                    'nbEtudiantAjouter' => $nbEtudiantAjouter]);
+                $this->render('accueil/accueil', "footerMoins");
             } else {
                 $_SESSION ["erreurs"] = $erreurs;
                 $this->render('sanction/ajouterSanction', "footerPlus");
