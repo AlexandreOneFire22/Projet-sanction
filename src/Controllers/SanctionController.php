@@ -51,7 +51,7 @@ class SanctionController extends AbstractController
 
         foreach ($etudiant as $item) {
 
-            $titre = $item->getPromotion()->getLibelle() . " | " .$item->getNom() . " | " . $item->getPrenom();
+            $titre = $item->getPromotion()->getAnnee() . " | " .$item->getPromotion()->getLibelle() . " | " .$item->getNom() . " | " . $item->getPrenom();
 
             $_SESSION["etudiant"][] = [$titre, $item->getId()];
         }
@@ -102,6 +102,8 @@ class SanctionController extends AbstractController
 
             if (empty($dateIncident)) {
                 $erreurs ["dateIncident"] = "La saisie de la date d'incident est obligatoire.";
+            }elseif (new \DateTime($_POST["dateIncident"])>new \DateTime()) {
+                $erreurs ["dateIncident"] = "La date doit être postérieur à la date du jour";
             }
 
             if (empty($erreurs)) {
