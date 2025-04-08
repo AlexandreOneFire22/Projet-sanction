@@ -17,7 +17,7 @@
 
     <?php if (isset($nbEtudiantAjouter) && isset($libellePromotion)) : ?>
     <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between">
-        <h5 class="my-auto">Importation effectué avec succès, <?=$nbEtudiantAjouter?> élèves ont été importés dans la
+        <h5 class="my-auto">Importation effectuée avec succès, <?=$nbEtudiantAjouter?> élèves ont été importés dans la
             promotion <?=$libellePromotion?></h5>
         <button type="button" class="close bg-success-subtle border-0" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true" class="fs-4">&times;</span>

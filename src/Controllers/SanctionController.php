@@ -103,7 +103,7 @@ class SanctionController extends AbstractController
             if (empty($dateIncident)) {
                 $erreurs ["dateIncident"] = "La saisie de la date d'incident est obligatoire.";
             }elseif (new \DateTime($_POST["dateIncident"])>new \DateTime()) {
-                $erreurs ["dateIncident"] = "La date doit être postérieur à la date du jour";
+                $erreurs ["dateIncident"] = "La date doit être antérieur à la date du jour";
             }
 
             if (empty($erreurs)) {
