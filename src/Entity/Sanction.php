@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\SanctionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -118,4 +119,5 @@ class Sanction
         $this->createurSanction = $createurSanction;
         return $this;
     }
+
 }

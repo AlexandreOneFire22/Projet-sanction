@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManager;
 use App\Http\Controllers\Controller;
 use Doctrine\ORM\Exception\EntityManagerClosed;
 use League\Csv\Reader;
+use App\Repository\SanctionRepository;
 
 class SanctionController extends AbstractController
 {
@@ -141,6 +142,40 @@ class SanctionController extends AbstractController
         } else {
             $this->render('sanction/ajouterSanction', "footerPlus");
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    public function getSanctionParEleve()
+    {
+
+                try {
+                    $resultat = $this->entityManager->createQueryBuilder()
+                        ->select("CONCAT(e.nom, ' ', e.prenom) AS nomComplet", "COUNT(s.id) AS nbSanction")
+                        ->from(\App\Entity\Sanction::class, 's')
+                        ->innerJoin('s.etudiantSanctionne', 'e')
+                        ->groupBy('e.nom, e.prenom')
+                        ->orderBy("nbSanction","DESC")
+                        ->addOrderBy("nomComplet")
+                        ->getQuery()
+                        ->getResult();
+
+                }catch (\Exception $exception){
+                    echo "coucou";
+                    echo $exception->getMessage();
+                }
+
+
+                $this->render('sanction/getSanction', "footerMoins",['resultat' => $resultat]);
     }
 
 }

@@ -11,5 +11,6 @@ return [
     '/ajouterEtudiant' => ['EtudiantController', 'ajouterEtudiant'],
     '/ajouterMotifSanction' => ['MotifSanctionController', 'ajouterMotifSanction'],
     '/ajouterSanction' => ['SanctionController', 'ajouterSanction'],
-    '/pageErreur' => ['ErrorController', 'pageErreur']
+    '/pageErreur' => ['ErrorController', 'pageErreur'],
+    '/getSanction' => ['SanctionController', 'getSanctionParEleve']
 ];

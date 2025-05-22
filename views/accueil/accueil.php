@@ -29,4 +29,6 @@
 <h1 class="text-primary fs-3" style="text-indent: 40px"> Ce site a pour vocation d'assister les professeurs,
     Personnels scolaires, et l'administration scolaire sur les sanctions données aux élèves et étudiants.</h1>
 
+    <a class="dropdown-item" href="/getSanction"><h2>Etudiants Sanctionnés</h2></a>
+
 </main>
